@@ -31,14 +31,14 @@ void Subject::setSubject(string &name, string &imageId, string &faceId, string &
     this->splitBbox(bbox);
 }
 
-void Subject::setSubject(string &name, string &imageId, string &faceId, int bboxY1, int bboxX1, int bboxY2, int bboxX2) {
+void Subject::setSubject(string &name, string &imageId, string &faceId, int bboxX1, int bboxY1, int bboxX2, int bboxY2) {
     this->name = name;
     this->imageId = imageId;
     this->faceId = faceId;
-    this->bboxY1 = bboxY1;
     this->bboxX1 = bboxX1;
-    this->bboxY2 = bboxY2;
+    this->bboxY1 = bboxY1;
     this->bboxX2 = bboxX2;
+    this->bboxY2 = bboxY2;
 }
 
 Subject::~Subject() {
@@ -109,6 +109,14 @@ void Subject::setName(const string& name) {
     this->name = name;
 }
 
+string Subject::getObox() const {
+    return obox;
+}
+
+void Subject::setObox(string &obox) {
+    this->obox = obox;
+}
+
 void Subject::splitBbox(string &bbox) {
     int temp = 0;
     vector<int> boxes;
@@ -123,8 +131,8 @@ void Subject::splitBbox(string &bbox) {
         boxes.push_back(temp);
     }
         
-    this->bboxY1 = boxes[0];
-    this->bboxX1 = boxes[1];
-    this->bboxY2 = boxes[2];
-    this->bboxX2 = boxes[3];
+    this->bboxX1 = boxes[0];
+    this->bboxY1 = boxes[1];
+    this->bboxX2 = boxes[2] - boxes[0];
+    this->bboxY2 = boxes[3] - boxes[1];
 }

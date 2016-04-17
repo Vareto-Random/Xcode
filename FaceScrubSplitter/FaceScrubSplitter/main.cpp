@@ -78,13 +78,17 @@ int main() {
     
     training.open("train.txt");
     for (itInner = train.begin(); itInner != train.end(); itInner++) {
-        training << "Writing this to a file.\n";
+        training << itInner->second.getName() << "/" << itInner->second.getFaceId() << ".jpg "
+        << itInner->second.getBboxX1() << " " << itInner->second.getBboxY1() << " "
+        << itInner->second.getBboxX2() << " " << itInner->second.getBboxY2() << endl;
     }
     training.close();
     
     testing.open("test.txt");
     for (itInner = test.begin(); itInner != test.end(); itInner++) {
-        testing << "Writing this to a file.\n";
+        testing << itInner->second.getName() << "/" << itInner->second.getFaceId() << ".jpg "
+        << itInner->second.getBboxX1() << " " << itInner->second.getBboxY1() << " "
+        << itInner->second.getBboxX2() << " " << itInner->second.getBboxY2() << endl;
     }
-    training.close();
+    testing.close();
 }

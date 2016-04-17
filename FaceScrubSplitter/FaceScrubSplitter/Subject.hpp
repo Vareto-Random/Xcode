@@ -41,10 +41,12 @@ public:
     void setImageId(string& imageId);
     const string& getName() const;
     void setName(const string& name);
+    void setObox(string &obox);
+    string getObox() const;
     
 private:
     inline void splitBbox(string &bbox);
-    string name, bbox, imageId, faceId;
+    string name, bbox, imageId, faceId, obox;
     int bboxY1, bboxX1, bboxY2, bboxX2;
 };
 
