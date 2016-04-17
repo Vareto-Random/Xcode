@@ -9,23 +9,21 @@
 #include "Subject.hpp"
 
 Subject::Subject() {
-    this->imageId = 0;
-    this->faceId = 0;
     this->bboxY1 = 0;
     this->bboxX1 = 0;
     this->bboxY2 = 0;
     this->bboxX2 = 0;
 }
 
-Subject::Subject(string &name, int imageId, int faceId, string &bbox) {
+Subject::Subject(string &name, string &imageId, string &faceId, string &bbox) {
     this->setSubject(name, imageId, faceId, bbox);
 }
 
-Subject::Subject(string &name, int imageId, int faceId, int bboxY1, int bboxX1, int bboxY2, int bboxX2) {
+Subject::Subject(string &name, string &imageId, string &faceId, int bboxY1, int bboxX1, int bboxY2, int bboxX2) {
     this->setSubject(name, imageId, faceId, bboxY1, bboxX1, bboxY2, bboxX2);
 }
 
-void Subject::setSubject(string &name, int imageId, int faceId, string &bbox) {
+void Subject::setSubject(string &name, string &imageId, string &faceId, string &bbox) {
     this->name = name;
     this->imageId = imageId;
     this->faceId = faceId;
@@ -33,7 +31,7 @@ void Subject::setSubject(string &name, int imageId, int faceId, string &bbox) {
     this->splitBbox(bbox);
 }
 
-void Subject::setSubject(string &name, int imageId, int faceId, int bboxY1, int bboxX1, int bboxY2, int bboxX2) {
+void Subject::setSubject(string &name, string &imageId, string &faceId, int bboxY1, int bboxX1, int bboxY2, int bboxX2) {
     this->name = name;
     this->imageId = imageId;
     this->faceId = faceId;
@@ -87,19 +85,19 @@ void Subject::setBboxY2(int bboxY2) {
     this->bboxY2 = bboxY2;
 }
 
-int Subject::getFaceId() const {
+string Subject::getFaceId() const {
     return faceId;
 }
 
-void Subject::setFaceId(int faceId) {
+void Subject::setFaceId(string &faceId) {
     this->faceId = faceId;
 }
 
-int Subject::getImageId() const {
+string Subject::getImageId() const {
     return imageId;
 }
 
-void Subject::setImageId(int imageId) {
+void Subject::setImageId(string &imageId) {
     this->imageId = imageId;
 }
 

@@ -18,12 +18,12 @@ using namespace std;
 class Subject {
 public:
     Subject();
-    Subject(string&, int, int, string&);
-    Subject(string&, int, int, int, int, int, int);
+    Subject(string&, string&, string&, string&);
+    Subject(string&, string&, string&, int, int, int, int);
     virtual ~Subject();
     
-    void setSubject(string&, int, int, string&);
-    void setSubject(string&, int, int, int, int, int, int);
+    void setSubject(string&, string&, string&, string&);
+    void setSubject(string&, string&, string&, int, int, int, int);
 
     string getBbox() const;
     void setBbox(string &bbox);
@@ -35,17 +35,17 @@ public:
     void setBboxY1(int bboxY1);
     int getBboxY2() const;
     void setBboxY2(int bboxY2);
-    int getFaceId() const;
-    void setFaceId(int faceId);
-    int getImageId() const;
-    void setImageId(int imageId);
+    string getFaceId() const;
+    void setFaceId(string& faceId);
+    string getImageId() const;
+    void setImageId(string& imageId);
     const string& getName() const;
     void setName(const string& name);
     
 private:
     inline void splitBbox(string &bbox);
-    string name, bbox;
-    int imageId, faceId, bboxY1, bboxX1, bboxY2, bboxX2;
+    string name, bbox, imageId, faceId;
+    int bboxY1, bboxX1, bboxY2, bboxX2;
 };
 
 #endif /* SUBJECT_H_ */
