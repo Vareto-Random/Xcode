@@ -133,6 +133,6 @@ void Subject::splitBbox(string &bbox) {
         
     this->bboxX1 = boxes[0];
     this->bboxY1 = boxes[1];
-    this->bboxX2 = boxes[2] - boxes[0];
-    this->bboxY2 = boxes[3] - boxes[1];
+    this->bboxX2 = (boxes[2] - boxes[0]);
+    this->bboxY2 = (boxes[3] - boxes[1]);
 }

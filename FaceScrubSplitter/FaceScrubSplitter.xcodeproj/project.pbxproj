@@ -213,6 +213,44 @@
 		7E114B6B1CC2CEC5002C6461 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-L/usr/local/lib",
+					"-lopencv_adas",
+					"-lopencv_bgsegm",
+					"-lopencv_bioinspired",
+					"-lopencv_core",
+					"-lopencv_datasets",
+					"-lopencv_face",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_latentsvm",
+					"-lopencv_line_descriptor",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_optflow",
+					"-lopencv_photo",
+					"-lopencv_reg",
+					"-lopencv_rgbd",
+					"-lopencv_saliency",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_surface_matching",
+					"-lopencv_text",
+					"-lopencv_tracking",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+					"-lopencv_xfeatures2d",
+					"-lopencv_ximgproc",
+					"-lopencv_xobjdetect",
+					"-lopencv_xphoto",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -220,6 +258,44 @@
 		7E114B6C1CC2CEC5002C6461 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-L/usr/local/lib",
+					"-lopencv_adas",
+					"-lopencv_bgsegm",
+					"-lopencv_bioinspired",
+					"-lopencv_core",
+					"-lopencv_datasets",
+					"-lopencv_face",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_latentsvm",
+					"-lopencv_line_descriptor",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_optflow",
+					"-lopencv_photo",
+					"-lopencv_reg",
+					"-lopencv_rgbd",
+					"-lopencv_saliency",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_surface_matching",
+					"-lopencv_text",
+					"-lopencv_tracking",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+					"-lopencv_xfeatures2d",
+					"-lopencv_ximgproc",
+					"-lopencv_xobjdetect",
+					"-lopencv_xphoto",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -243,6 +319,7 @@
 				7E114B6C1CC2CEC5002C6461 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

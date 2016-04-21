@@ -61,6 +61,12 @@
             ReferencedContainer = "container:FaceScrubSplitter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/Vareto/Downloads/faceScrub/ 1 40 10"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
