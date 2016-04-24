@@ -63,7 +63,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/Vareto/Downloads/faceScrub/ 1 40 10"
+            argument = "/Users/Vareto/Downloads/faceScrubMF/ 20 50 10"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

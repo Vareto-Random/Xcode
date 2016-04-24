@@ -63,7 +63,7 @@ int main(int argc, const char * argv[]) {
                     infile >> bbox;
                     infile >> sha256;
                     
-                    fullName = firstName + "/" + faceId + ".jpg";
+                    fullName = firstName + "/" + firstName + "_" + faceId + ".jpg";
                     individual.setSubject(firstName, imageId, faceId, bbox);
                     singleDataset.insert(pair<string, Subject>(fullName, individual));
                 }
@@ -107,25 +107,25 @@ int main(int argc, const char * argv[]) {
                     list.push_back(itInner->second);
                 }
                 
-                assert((sizeTrain + sizeTest) < list.size());
-                
-                counter = 0;
-                while (counter < sizeTrain) {
-                    pos = rand() % list.size();
-                    if (chosen.find(pos) == chosen.end()) {
-                        chosen.insert(pos);
-                        train.insert(pair<string, Subject>(firstName, list[pos]));
-                        counter++;
+                if (list.size() > sizeTrain + sizeTest) {
+                    counter = 0;
+                    while (counter < sizeTrain) {
+                        pos = rand() % list.size();
+                        if (chosen.find(pos) == chosen.end()) {
+                            chosen.insert(pos);
+                            train.insert(pair<string, Subject>(firstName, list[pos]));
+                            counter++;
+                        }
                     }
-                }
-                
-                counter = 0;
-                while (counter < sizeTest) {
-                    pos = rand() % list.size();
-                    if (chosen.find(pos) == chosen.end()) {
-                        chosen.insert(pos);
-                        test.insert(pair<string, Subject>(firstName, list[pos]));
-                        counter++;
+                    
+                    counter = 0;
+                    while (counter < sizeTest) {
+                        pos = rand() % list.size();
+                        if (chosen.find(pos) == chosen.end()) {
+                            chosen.insert(pos);
+                            test.insert(pair<string, Subject>(firstName, list[pos]));
+                            counter++;
+                        }
                     }
                 }
                 
@@ -133,15 +133,16 @@ int main(int argc, const char * argv[]) {
                 list.clear();
             }
             
-            printf("SingleDataset: %lu\nMultiDataset: %lu\nTrainset: %lu\nTestset: %lu\n",
-                   singleDataset.size(), multiDataset.size(), train.size(), test.size());
+            printf("Iteration %d\nSingleDataset: %lu\nMultiDataset: %lu\nTrainset: %lu\nTestset: %lu\n\n",
+                   index, singleDataset.size(), multiDataset.size(), train.size(), test.size());
             
             /** saving training and testing sets **/
             ofstream training, testing;
             
             training.open("train-" + to_string(sizeTrain) + "-" + to_string(sizeTest) + "-" + to_string(index) + ".txt");
             for (itInner = train.begin(); itInner != train.end(); itInner++) {
-                training << itInner->second.getName() << "/" << itInner->second.getFaceId() << ".jpg "
+                training << itInner->second.getName() << "/" << itInner->second.getName()
+                << "_" << itInner->second.getFaceId() << ".jpg "
                 << itInner->second.getBboxX1() << " " << itInner->second.getBboxY1() << " "
                 << itInner->second.getBboxX2() << " " << itInner->second.getBboxY2() << endl;
             }
@@ -149,7 +150,8 @@ int main(int argc, const char * argv[]) {
             
             testing.open("test-" + to_string(sizeTrain) + "-" + to_string(sizeTest) + "-" + to_string(index) + ".txt");
             for (itInner = test.begin(); itInner != test.end(); itInner++) {
-                testing << itInner->second.getName() << "/" << itInner->second.getFaceId() << ".jpg "
+                testing << itInner->second.getName() << "/" << itInner->second.getName()
+                << "_" << itInner->second.getFaceId() << ".jpg "
                 << itInner->second.getBboxX1() << " " << itInner->second.getBboxY1() << " "
                 << itInner->second.getBboxX2() << " " << itInner->second.getBboxY2() << endl;
             }
