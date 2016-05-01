@@ -15,24 +15,26 @@ Subject::Subject() {
     this->bboxX2 = 0;
 }
 
-Subject::Subject(string &name, string &imageId, string &faceId, string &bbox) {
-    this->setSubject(name, imageId, faceId, bbox);
+Subject::Subject(string &name, string &fullName, string &imageId, string &faceId, string &bbox) {
+    this->setSubject(name, fullName, imageId, faceId, bbox);
 }
 
-Subject::Subject(string &name, string &imageId, string &faceId, int bboxY1, int bboxX1, int bboxY2, int bboxX2) {
-    this->setSubject(name, imageId, faceId, bboxY1, bboxX1, bboxY2, bboxX2);
+Subject::Subject(string &name, string &fullName, string &imageId, string &faceId, int bboxY1, int bboxX1, int bboxY2, int bboxX2) {
+    this->setSubject(name, fullName, imageId, faceId, bboxY1, bboxX1, bboxY2, bboxX2);
 }
 
-void Subject::setSubject(string &name, string &imageId, string &faceId, string &bbox) {
+void Subject::setSubject(string &name, string &fullName, string &imageId, string &faceId, string &bbox) {
     this->name = name;
+    this->fullName = fullName;
     this->imageId = imageId;
     this->faceId = faceId;
     this->bbox = bbox;
     this->splitBbox(bbox);
 }
 
-void Subject::setSubject(string &name, string &imageId, string &faceId, int bboxX1, int bboxY1, int bboxX2, int bboxY2) {
+void Subject::setSubject(string &name, string &fullName, string &imageId, string &faceId, int bboxX1, int bboxY1, int bboxX2, int bboxY2) {
     this->name = name;
+    this->fullName = name;
     this->imageId = imageId;
     this->faceId = faceId;
     this->bboxX1 = bboxX1;
@@ -107,6 +109,14 @@ const string& Subject::getName() const {
 
 void Subject::setName(const string& name) {
     this->name = name;
+}
+
+const string& Subject::getFullName() const {
+    return fullName;
+}
+
+void Subject::setFullName(const string& name) {
+    this->fullName = name;
 }
 
 string Subject::getObox() const {

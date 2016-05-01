@@ -6,7 +6,6 @@
 //  Copyright © 2016 Rafael Vareto. All rights reserved.
 //
 
-#define PARAM 0.4
 #define RANDOM true
 
 #include <iostream>
@@ -26,12 +25,16 @@ int main(int argc, const char * argv[]) {
         cerr << "Incorrect number of parameters." << endl
             << "./FaceScrubSplitter.app [path to dataset] [train set size] [test set size] [number of iterations]" << endl;
         return 1;
-    } else {
+    } else if (argc == 5) {
         string path = string(argv[1]);
         int sizeTrain = atoi(argv[2]);
         int sizeTest =  atoi(argv[3]);
         int numiterations = atoi(argv[4]);
-        
+    } else if (argc == 2)
+        int quantity = 14;
+        int galleySize[] = {1, 2, 3, 4, 5, 8, 10, 15, 20, 25, 30, 35, 40, 50};
+        int iterations[] = {15, 15, 10, 10, 10, 8, 8, 5, 5, 3, 3, 2, 2, 1};
+    }
         /** reading file **/
         vector<string> head;
         map<string, Subject> singleDataset;
@@ -64,7 +67,7 @@ int main(int argc, const char * argv[]) {
                     infile >> sha256;
                     
                     fullName = firstName + "/" + firstName + "_" + faceId + ".jpg";
-                    individual.setSubject(firstName, imageId, faceId, bbox);
+                    individual.setSubject(firstName, fullName, imageId, faceId, bbox);
                     singleDataset.insert(pair<string, Subject>(fullName, individual));
                 }
             }
@@ -93,52 +96,74 @@ int main(int argc, const char * argv[]) {
             infile.close();
         }
         
+        /** fundamental variables **/
+        int counter, pos;
+        set<int> chosen;
+        set<string> testChosen;
+        vector<Subject> available, list;
+        ofstream training, testing;
+        multimap<string, Subject>::iterator itOut, itInner;
         
-        /** splitting into training and testing sets **/
+        /** splitting into testing set **/
+        for (itOut = multiDataset.begin(); itOut != multiDataset.end(); itOut = multiDataset.upper_bound(itOut->first)) {
+            
+            firstName = itOut->first;
+            for (itInner = multiDataset.lower_bound(firstName); itInner != multiDataset.upper_bound(firstName); itInner++) {
+                list.push_back(itInner->second);
+            }
+            
+            if (list.size() > sizeTest) {
+                counter = 0;
+                while (counter < sizeTest) {
+                    pos = rand() % list.size();
+                    fullName = list[pos].getFullName();
+                    
+                    if (testChosen.find(fullName) == testChosen.end()) {
+                        testChosen.insert(fullName);
+                        test.insert(pair<string, Subject>(firstName, list[pos]));
+                        counter++;
+                    }
+                }
+            }
+            
+            list.clear();
+        }
+        
+        /** splitting into training sets **/
         for (int index = 1; index <= numiterations; index++) {
-            int pos, counter;
-            multimap<string, Subject>::iterator itOut, itInner;
-            set<int> chosen;
-            vector<Subject> list;
             for (itOut = multiDataset.begin(); itOut != multiDataset.end(); itOut = multiDataset.upper_bound(itOut->first)) {
 
                 firstName = itOut->first;
-                for (itInner = multiDataset.lower_bound(itOut->first); itInner != multiDataset.upper_bound(itOut->first); itInner++) {
+                for (itInner = multiDataset.lower_bound(firstName); itInner != multiDataset.upper_bound(firstName); itInner++) {
                     list.push_back(itInner->second);
+                    
+                    fullName = itInner->second.getFullName();
+                    if (testChosen.find(fullName) == testChosen.end()) {
+                        available.push_back(itInner->second);
+                    }
                 }
                 
-                if (list.size() > sizeTrain + sizeTest) {
+                if ( (list.size() > sizeTrain + sizeTest) && (available.size() > sizeTrain) ) {
                     counter = 0;
                     while (counter < sizeTrain) {
-                        pos = rand() % list.size();
+                        pos = rand() % available.size();
                         if (chosen.find(pos) == chosen.end()) {
                             chosen.insert(pos);
-                            train.insert(pair<string, Subject>(firstName, list[pos]));
-                            counter++;
-                        }
-                    }
-                    
-                    counter = 0;
-                    while (counter < sizeTest) {
-                        pos = rand() % list.size();
-                        if (chosen.find(pos) == chosen.end()) {
-                            chosen.insert(pos);
-                            test.insert(pair<string, Subject>(firstName, list[pos]));
+                            train.insert(pair<string, Subject>(firstName, available[pos]));
                             counter++;
                         }
                     }
                 }
                 
+                available.clear();
                 chosen.clear();
                 list.clear();
             }
             
-            printf("Iteration %d\nSingleDataset: %lu\nMultiDataset: %lu\nTrainset: %lu\nTestset: %lu\n\n",
-                   index, singleDataset.size(), multiDataset.size(), train.size(), test.size());
+            printf("Iteration %d\nSingleDataset: %lu\nMultiDataset: %lu\nTrainset: %lu\n\n",
+                   index, singleDataset.size(), multiDataset.size(), train.size());
             
             /** saving training and testing sets **/
-            ofstream training, testing;
-            
             training.open("train-" + to_string(sizeTrain) + "-" + to_string(sizeTest) + "-" + to_string(index) + ".txt");
             for (itInner = train.begin(); itInner != train.end(); itInner++) {
                 training << itInner->second.getName() << "/" << itInner->second.getName()
@@ -148,18 +173,18 @@ int main(int argc, const char * argv[]) {
             }
             training.close();
             
-            testing.open("test-" + to_string(sizeTrain) + "-" + to_string(sizeTest) + "-" + to_string(index) + ".txt");
-            for (itInner = test.begin(); itInner != test.end(); itInner++) {
-                testing << itInner->second.getName() << "/" << itInner->second.getName()
-                << "_" << itInner->second.getFaceId() << ".jpg "
-                << itInner->second.getBboxX1() << " " << itInner->second.getBboxY1() << " "
-                << itInner->second.getBboxX2() << " " << itInner->second.getBboxY2() << endl;
-            }
-            testing.close();
-            
             train.clear();
-            test.clear();
         }
+        
+        /** saving testing set **/
+        testing.open("test-" + to_string(sizeTrain) + "-" + to_string(sizeTest) + ".txt");
+        for (itInner = test.begin(); itInner != test.end(); itInner++) {
+            testing << itInner->second.getName() << "/" << itInner->second.getName()
+            << "_" << itInner->second.getFaceId() << ".jpg "
+            << itInner->second.getBboxX1() << " " << itInner->second.getBboxY1() << " "
+            << itInner->second.getBboxX2() << " " << itInner->second.getBboxY2() << endl;
+        }
+        testing.close();
         
         return 0;
     }
