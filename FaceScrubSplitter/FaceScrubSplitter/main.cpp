@@ -101,6 +101,7 @@ int main(int argc, const char * argv[]) {
         multimap<string, Subject>::iterator itOut, itInner;
         
         /** splitting into testing set **/
+        srand(1);
         for (itOut = multiDataset.begin(); itOut != multiDataset.end(); itOut = multiDataset.upper_bound(itOut->first)) {
             
             firstName = itOut->first;
@@ -126,6 +127,7 @@ int main(int argc, const char * argv[]) {
         }
         
         /** splitting into training sets **/
+        srand( (int) time(NULL) );
         for (int index = 1; index <= numiterations; index++) {
             for (itOut = multiDataset.begin(); itOut != multiDataset.end(); itOut = multiDataset.upper_bound(itOut->first)) {
 
