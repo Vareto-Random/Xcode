@@ -25,16 +25,12 @@ int main(int argc, const char * argv[]) {
         cerr << "Incorrect number of parameters." << endl
             << "./FaceScrubSplitter.app [path to dataset] [train set size] [test set size] [number of iterations]" << endl;
         return 1;
-    } else if (argc == 5) {
+    } else {
         string path = string(argv[1]);
         int sizeTrain = atoi(argv[2]);
         int sizeTest =  atoi(argv[3]);
         int numiterations = atoi(argv[4]);
-    } else if (argc == 2)
-        int quantity = 14;
-        int galleySize[] = {1, 2, 3, 4, 5, 8, 10, 15, 20, 25, 30, 35, 40, 50};
-        int iterations[] = {15, 15, 10, 10, 10, 8, 8, 5, 5, 3, 3, 2, 2, 1};
-    }
+        
         /** reading file **/
         vector<string> head;
         map<string, Subject> singleDataset;
