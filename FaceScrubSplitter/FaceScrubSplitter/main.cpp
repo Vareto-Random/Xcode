@@ -24,7 +24,6 @@ int main(int argc, const char * argv[]) {
     if (argc != 5) {
         cerr << "Incorrect number of parameters." << endl
             << "./FaceScrubSplitter.app [path to dataset] [train set size] [test set size] [number of iterations]" << endl;
-        return 1;
     } else {
         string path = string(argv[1]);
         int sizeTrain = atoi(argv[2]);
