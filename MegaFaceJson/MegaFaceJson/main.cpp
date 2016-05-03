@@ -24,11 +24,11 @@ void removeCharsFromString(string &str, char* charsToRemove);
 int main(int argc, const char * argv[]) {
     if (argc != 5) {
         cerr << "Incorrect number of parameters." << endl
-        << "./FaceScrubSplitter.app [path to dataset] [path to jpeg list] [negative set size] [number of iterations]" << endl;
+        << "./FaceScrubSplitter.app [path to dataset] [path to jpeg list] [extra set size] [number of iterations]" << endl;
     } else {
         string path = string(argv[1]);
         string jpegList = string(argv[2]);
-        int negativeSize = atoi(argv[3]);
+        int extraSize = atoi(argv[3]);
         int numIterations = atoi(argv[4]);
         
         cout << path + jpegList << endl;
@@ -40,7 +40,7 @@ int main(int argc, const char * argv[]) {
             ifstream jpegInput, jsonInput;
             ofstream outfile;
             
-            jpegInput.open(path + jpegList);
+            jpegInput.open(jpegList);
             if (!jpegInput.is_open()) {
                 cerr << "File could not be opened\n";
             } else {
@@ -56,16 +56,17 @@ int main(int argc, const char * argv[]) {
             jpegInput.close();
             
             /** reading JSON buffer **/
-            srand(outer);
+            // srand(outer);
             int pos;
             string jsonPath;
             set<int> chosen;
             vector<Subject> individuals;
             
-            for (unsigned int inner = 0; inner < negativeSize; inner++) {
-                pos = rand() % jpegFiles.size();
+            for (unsigned int inner = 0; inner < extraSize && inner < jpegFiles.size(); inner++) {
+                // pos = rand() % jpegFiles.size();
+                pos = inner;
                 
-                if (chosen.find(pos) == chosen.end()) {
+                // if (chosen.find(pos) == chosen.end()) {
                     jsonPath = path + jpegFiles[pos] + ".json";
                     jsonInput.open(jsonPath, ifstream::in);
                     
@@ -87,15 +88,15 @@ int main(int argc, const char * argv[]) {
                         
                         individuals.push_back( Subject(jpegFiles[pos], x, y, w, h) );
                     } else {
-                        cerr << jpegFiles[pos] << " file could not be opened\n";
+                        cerr << jpegFiles[pos] << ".json file could not be opened\n";
                     }
                     
                     jsonInput.close();
-                }
+                // }
             }
             
             /** saving testing set **/
-            outfile.open("extra-" + to_string(negativeSize) + "-" + to_string(outer) + ".txt");
+            outfile.open("extra-" + to_string(extraSize) + "-" + to_string(outer) + ".txt");
             for (int inner = 0; inner < individuals.size(); inner++) {
                 outfile << individuals[inner].getPath() << " "
                 << individuals[inner].getX() << " " << individuals[inner].getY()
