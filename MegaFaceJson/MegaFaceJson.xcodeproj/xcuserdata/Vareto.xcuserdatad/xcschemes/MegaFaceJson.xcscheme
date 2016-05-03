@@ -63,7 +63,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/Vareto/Downloads/megaFace/ fileList.txt 100 1"
+            argument = "/Users/Vareto/Downloads/megaFace/ fileList.txt 1000 10"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

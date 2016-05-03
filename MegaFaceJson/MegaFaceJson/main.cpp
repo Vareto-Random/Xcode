@@ -7,6 +7,7 @@
 //  Copyright © 2016 Rafael Vareto. All rights reserved.
 //
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <set>
@@ -14,7 +15,11 @@
 
 #include <opencv2/highgui.hpp>
 
+#include "Subject.hpp"
+
 using namespace std;
+
+void removeCharsFromString(string &str, char* charsToRemove);
 
 int main(int argc, const char * argv[]) {
     if (argc != 5) {
@@ -24,59 +29,86 @@ int main(int argc, const char * argv[]) {
         string path = string(argv[1]);
         string jpegList = string(argv[2]);
         int negativeSize = atoi(argv[3]);
-        int numiterations = atoi(argv[4]);
+        int numIterations = atoi(argv[4]);
         
         cout << path + jpegList << endl;
         
-        /** reading list of files **/
-        string jpeg, json;
-        vector<string> jpegFiles;
-        ifstream jpegInput, jsonInput;
-        
-        jpegInput.open(path + jpegList);
-        if (!jpegInput.is_open()) {
-            cerr << "File could not be opened\n";
-        } else {
-            while (!jpegInput.eof()) {
-                jpegInput >> jpeg;
-                
-                jsonInput.open(path + jpeg + ".json");
-                if (jsonInput.is_open()) {
-                    jpegFiles.push_back(jpeg);
-                }
-            }
-        }
-
-        /** reading JSON buffer **/
-        srand(1);
-        int pos;
-        string jsonPath;
-        set<int> chosen;
-        vector<string> bufferArray, boundingBox;
-        for (int index = 0; index < negativeSize; index++) {
-            pos = rand() % jpegFiles.size();
+        for (unsigned int outer = 0; outer < numIterations; outer++) {
+            /** reading list of files **/
+            string jpeg, json;
+            vector<string> jpegFiles;
+            ifstream jpegInput, jsonInput;
+            ofstream outfile;
             
-            if (chosen.find(pos) == chosen.end()) {
-                jsonPath = path + jpegFiles[pos] + ".json";
-                jsonInput.open(jsonPath, ifstream::in);
-                
-                if (jsonInput.is_open()) {
-                    stringstream buffer;
-                    vector<string> array;
+            jpegInput.open(path + jpegList);
+            if (!jpegInput.is_open()) {
+                cerr << "File could not be opened\n";
+            } else {
+                while (!jpegInput.eof()) {
+                    jpegInput >> jpeg;
                     
-                    buffer << jsonInput.rdbuf();
-                    cout << buffer.str().substr(18, buffer.str().find("}")) << endl;
-                    bufferArray.push_back(buffer.str());
-                } else {
-                    cerr << jpegFiles[pos] << " file could not be opened\n";
+                    jsonInput.open(path + jpeg + ".json");
+                    if (jsonInput.is_open()) {
+                        jpegFiles.push_back(jpeg);
+                    }
                 }
-                
-                jsonInput.close();
             }
+            jpegInput.close();
+            
+            /** reading JSON buffer **/
+            srand(outer);
+            int pos;
+            string jsonPath;
+            set<int> chosen;
+            vector<Subject> individuals;
+            
+            for (unsigned int inner = 0; inner < negativeSize; inner++) {
+                pos = rand() % jpegFiles.size();
+                
+                if (chosen.find(pos) == chosen.end()) {
+                    jsonPath = path + jpegFiles[pos] + ".json";
+                    jsonInput.open(jsonPath, ifstream::in);
+                    
+                    if (jsonInput.is_open()) {
+                        string token;
+                        stringstream buffer;
+                        vector<string> array;
+                        
+                        buffer << jsonInput.rdbuf();
+                        while (buffer >> token) {
+                            removeCharsFromString(token, (char*) "{}:,");
+                            array.push_back(token);
+                        }
+                        
+                        int x = atoi(array[4].c_str());
+                        int y = atoi(array[2].c_str());
+                        int w = atoi(array[8].c_str());
+                        int h = atoi(array[6].c_str());
+                        
+                        individuals.push_back( Subject(jpegFiles[pos], x, y, w, h) );
+                    } else {
+                        cerr << jpegFiles[pos] << " file could not be opened\n";
+                    }
+                    
+                    jsonInput.close();
+                }
+            }
+            
+            /** saving testing set **/
+            outfile.open("extra-" + to_string(negativeSize) + "-" + to_string(outer) + ".txt");
+            for (int inner = 0; inner < individuals.size(); inner++) {
+                outfile << individuals[inner].getPath() << " "
+                << individuals[inner].getX() << " " << individuals[inner].getY()
+                << individuals[inner].getWidth() << " " << individuals[inner].getHeight() << endl;
+            }
+            outfile.close();
         }
-        
-        /** splitting buffer into string vector **/
-        
     }
     return 0;
+}
+
+inline void removeCharsFromString(string &str, char* charsToRemove) {
+    for (unsigned int i = 0; i < strlen(charsToRemove); i++) {
+        str.erase( remove(str.begin(), str.end(), charsToRemove[i]), str.end() );
+    }
 }

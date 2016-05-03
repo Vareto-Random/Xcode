@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E34AB281CD8D42800107366 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E34AB271CD8D42800107366 /* main.cpp */; };
+		7E34AB361CD927D100107366 /* Subject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E34AB341CD927D100107366 /* Subject.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		7E34AB241CD8D42800107366 /* MegaFaceJson */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MegaFaceJson; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E34AB271CD8D42800107366 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7E34AB341CD927D100107366 /* Subject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Subject.cpp; sourceTree = "<group>"; };
+		7E34AB351CD927D100107366 /* Subject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Subject.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,8 @@
 		7E34AB261CD8D42800107366 /* MegaFaceJson */ = {
 			isa = PBXGroup;
 			children = (
+				7E34AB341CD927D100107366 /* Subject.cpp */,
+				7E34AB351CD927D100107366 /* Subject.hpp */,
 				7E34AB271CD8D42800107366 /* main.cpp */,
 			);
 			path = MegaFaceJson;
@@ -118,6 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E34AB361CD927D100107366 /* Subject.cpp in Sources */,
 				7E34AB281CD8D42800107366 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,6 +16,10 @@ Subject::Subject(string &path, int x, int y, int w, int h) {
     this->setSubject(path, x, y, w, h);
 }
 
+Subject::~Subject() {
+    
+}
+
 void Subject::setSubject(string &path, int x, int y, int w, int h) {
     this->path = path;
     this->pointX = x;
