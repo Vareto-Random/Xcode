@@ -99,7 +99,7 @@ int main(int argc, const char * argv[]) {
             outfile.open("extra-" + to_string(extraSize) + "-" + to_string(outer) + ".txt");
             for (int inner = 0; inner < individuals.size(); inner++) {
                 outfile << individuals[inner].getPath() << " "
-                << individuals[inner].getX() << " " << individuals[inner].getY()
+                << individuals[inner].getX() << " " << individuals[inner].getY() << " "
                 << individuals[inner].getWidth() << " " << individuals[inner].getHeight() << endl;
             }
             outfile.close();
