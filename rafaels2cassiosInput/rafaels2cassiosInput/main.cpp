@@ -40,7 +40,7 @@ int main(int argc, const char * argv[]) {
             infile.close();
             
             ofstream outfile;
-            outfile.open("out_" + string(argv[index]));
+            outfile.open("cass_" + string(argv[index]));
             
             if (outfile.is_open()) {
                 for (unsigned int step = 0; step < samples.size(); step++) {
@@ -54,6 +54,8 @@ int main(int argc, const char * argv[]) {
             outfile.close();
             
             samples.clear();
+        } else {
+            cerr << "No parameter informed." << endl;
         }
     }
     

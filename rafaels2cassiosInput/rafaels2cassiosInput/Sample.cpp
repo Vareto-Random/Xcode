@@ -70,7 +70,11 @@ void Sample::setHeight(int _h) {
 }
 
 void Sample::genSubject(string _file) {
-    long beg = _file.find_last_of("/") + 1;
-    long end = _file.find_last_of(".");
+    //long beg = _file.find_last_of("/") + 1;
+    //long end = _file.find_last_of(".");
+    //this->subject =  _file.substr(beg, end - beg);
+    
+    long beg = 0;
+    long end = _file.find_first_of("/");
     this->subject =  _file.substr(beg, end - beg);
 }

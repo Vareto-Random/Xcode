@@ -63,47 +63,19 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "extra-10-0.txt&#10;extra-100-0.txt&#10;extra-1000-0.txt&#10;extra-10000-0.txt&#10;extra-100000-0.txt&#10;extra-1000000-0.txt&#10;extra-50-0.txt&#10;extra-500-0.txt&#10;extra-5000-0.txt&#10;extra-50000-0.txt&#10;extra-500000-0.txt"
+            argument = "test-50-50.txt"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "extra-50-0.txt"
+            argument = "train-2-50-1.txt"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "extra-100-0.txt"
+            argument = "train-5-50-1.txt"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "extra-500-0.txt"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "extra-1000-0.txt"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "extra-5000-0.txt"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "extra-10000-0.txt"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "extra-50000-0.txt"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "extra-100000-0.txt"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "extra-500000-0.txt"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "extra-1000000-0.txt"
+            argument = "train-50-50-1.txt"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
