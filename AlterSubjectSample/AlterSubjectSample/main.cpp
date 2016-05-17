@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
                     infile >> h;
                     
                     Sample temp = Sample(sub, sam, x, y, w, h);
-                    temp.addSamplePrefix("facescrub/downloaded/");
+                    temp.addSamplePrefix("facescrub/");
                     samples.push_back(temp);
                 }
                 
